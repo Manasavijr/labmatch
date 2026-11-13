@@ -1,0 +1,15 @@
+name: labmatch
+version: "1.0.0"
+profile: labmatch
+model-paths: ["models"]
+test-paths: ["tests"]
+target-path: "target"
+vars:
+  non_research_pattern: "^(i-corps|conference|workshop|travel|student travel|symposium|planning:|collaborative research: conference|doctoral dissertation)|i-corps|travel support|student support for|conference on|workshop on|summer school"
+  as_of_date: "2026-11-12"
+  ml_pattern: "machine learning|deep learning|neural network|artificial intelligence|reinforcement learning|large language model|natural language processing|computer vision|transformer model|foundation model|generative model"
+models:
+  labmatch:
+    staging: {+materialized: view}
+    intermediate: {+materialized: table}
+    marts: {+materialized: table}

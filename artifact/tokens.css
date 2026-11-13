@@ -1,0 +1,3 @@
+:root{--arc-nih:#3F5E2C;--arc-nsf:#A9481F;--campus:#9A6A17}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--arc-nih:#B9D38F;--arc-nsf:#F3A374;--campus:#F4C873}}
+:root[data-theme="dark"]{--arc-nih:#B9D38F;--arc-nsf:#F3A374;--campus:#F4C873}

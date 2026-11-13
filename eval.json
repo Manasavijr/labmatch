@@ -1,0 +1,63 @@
+{
+  "protocol": {
+    "min_papers": 4,
+    "candidates": 100,
+    "seed": 7,
+    "labs": 31313,
+    "queries_total": 5121,
+    "queries_train": 4097,
+    "queries_test": 1024,
+    "best_iteration": 61,
+    "query_text": "held-out paper title"
+  },
+  "metrics": {
+    "bm25": {
+      "recall@10": 0.4962,
+      "recall@50": 0.6367,
+      "recall@100": 0.6912,
+      "ndcg@10": 0.4154,
+      "mrr": 0.4418
+    },
+    "dense": {
+      "recall@10": 0.3832,
+      "recall@50": 0.5769,
+      "recall@100": 0.6624,
+      "ndcg@10": 0.2854,
+      "mrr": 0.3067
+    },
+    "hybrid": {
+      "recall@10": 0.5086,
+      "recall@50": 0.6895,
+      "recall@100": 0.7585,
+      "ndcg@10": 0.3969,
+      "mrr": 0.4229
+    },
+    "lambdarank": {
+      "recall@10": 0.5616,
+      "recall@50": 0.7116,
+      "recall@100": 0.7585,
+      "ndcg@10": 0.4631,
+      "mrr": 0.4877
+    }
+  },
+  "feature_gain": {
+    "bm25_rank": 111932.7,
+    "rrf": 46830.7,
+    "log_pubs": 12080.5,
+    "dense_rank": 9287.0,
+    "bm25_qmax": 8294.1,
+    "bm25": 4365.0,
+    "log_pubs_recent": 2369.7,
+    "dense_cos": 1352.0,
+    "years_active": 1044.3,
+    "is_nih": 854.2,
+    "n_awards": 824.8,
+    "dense_qmax": 562.6,
+    "log_active_amount": 459.6,
+    "years_since_last_award": 425.0,
+    "months_left": 184.8,
+    "is_nsf": 108.7,
+    "n_ml_awards": 100.7,
+    "n_active": 34.5
+  }
+}

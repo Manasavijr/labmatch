@@ -1,0 +1,16 @@
+pandas
+pyarrow
+numpy
+scipy
+scikit-learn
+duckdb
+pyspark==3.5.3
+pyiceberg[sql-sqlite,pyarrow]==0.8.1
+dbt-duckdb
+torch
+sentence-transformers
+lightgbm
+mlflow-skinny
+fastapi
+uvicorn
+httpx

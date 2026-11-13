@@ -1,0 +1,573 @@
+<title>LabMatch</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,100;1,9..144,400..700,100&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>/*CSS*/</style>
+
+<canvas id="topo" aria-hidden="true"></canvas>
+<div class="app">
+  <aside class="side">
+    <a class="brand" href="#overview">
+      <svg width="26" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle class="ring a" cx="9" cy="12" r="7"></circle><circle class="ring b" cx="15" cy="12" r="7"></circle><circle cx="12" cy="12" r="1.7" fill="var(--ochre)"></circle></svg>
+      LabMatch
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <span class="navind" id="navind"></span>
+      <button data-tab="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg><span>Overview<span class="sub2">What LabMatch does</span></span></button>
+      <button data-tab="match"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><span>Match<span class="sub2">Find labs for your research</span></span></button>
+      <button data-tab="landscape"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="7" r="2"></circle><circle cx="17" cy="6" r="2"></circle><circle cx="12" cy="16" r="2"></circle><circle cx="19" cy="17" r="1.5"></circle><circle cx="5" cy="17" r="1.5"></circle></svg><span>Landscape<span class="sub2">Map of every lab</span></span></button>
+      <button data-tab="lab" id="labnav" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"></path></svg><span>Lab<span class="sub2" id="labsub">Open one to see it here</span></span></button>
+      <button data-tab="shortlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg><span>Shortlist<span class="sub2">Compare saved labs</span></span><span class="badge" id="sbadge">0</span></button>
+      <button data-tab="how"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h6M14 6h6M4 18h6M14 18h6M7 6v12M17 6v12M10 12h4"></path></svg><span>How it works<span class="sub2">Pipeline and evaluation</span></span></button>
+    </nav>
+    <div class="spacer"></div>
+    <div class="count2"><b id="labcount">—</b><span>funded AI/ML labs in the US</span></div>
+    <div class="srcs"><span>OpenAlex</span><span>NIH</span><span>NSF</span></div>
+    <div class="credit">Built by <a href="https://github.com/Manasavijr" target="_blank" rel="noopener">Manasa Vijayaraghavan</a></div>
+    <div class="foot2"><span class="lbl2">Theme</span>
+      <button class="iconbtn" id="theme" type="button" aria-label="Switch light or dark theme"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></button>
+    </div>
+  </aside>
+
+  <div class="mainp">
+    <!-- OVERVIEW -->
+    <section class="view" id="v-overview">
+      <div class="ov">
+        <div class="ovhero">
+          <span class="eyebrow">For students and researchers choosing a lab</span>
+          <h1>Find the research lab <em>that fits you.</em></h1>
+          <p class="lede">Describe what you want to work on. LabMatch reads every NIH and NSF grant, ranks the funded US AI/ML labs doing that work right now, and tells you in plain words why each one fits.</p>
+          <div class="ctas"><a class="btn pri big" href="#match">Find my lab <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a><a class="btn big" href="#how">How it works</a></div>
+          <div class="ovstats" id="ovstats"></div>
+        </div>
+        <div class="pane ovdemo">
+          <div class="ph"><h2>What you get</h2><span>example</span></div>
+          <div class="pb">
+            <a class="ovq" id="ovq" href="#match" title="Open this search in Match"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><span id="ovtype"></span><i class="caret"></i><span class="ovtry">Try it →</span></a>
+            <ol class="ovres" id="ovres"></ol>
+            <a class="ovmore" id="ovmore" href="#match">See all ten matches and why they fit →</a>
+          </div>
+        </div>
+        <div class="ovsteps">
+          <a class="ovstep" href="#match"><i>1</i><div><b>Describe your research</b><span>A sentence, your interests, or a paper abstract.</span></div></a>
+          <a class="ovstep" href="#landscape"><i>2</i><div><b>See who works on it</b><span>Ranked labs with the reasons, grants and recent papers.</span></div></a>
+          <a class="ovstep" href="#shortlist"><i>3</i><div><b>Save and compare</b><span>Shortlist labs and track who you have contacted.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MATCH -->
+    <section class="view" id="v-match">
+      <div class="vt"><div><span class="eyebrow">Match</span>
+        <h1><span class="w">Find</span> <span class="w" style="animation-delay:.08s">the</span> <span class="w" style="animation-delay:.16s">lab</span> <em><span class="w" style="animation-delay:.26s">that</span> <span class="w" style="animation-delay:.34s">fits</span> <span class="w" style="animation-delay:.42s">you.</span></em></h1>
+        </div></div>
+      <div class="mgrid">
+        <form class="qbox" id="form">
+          <div class="box">
+            <label for="q" class="sr">Your research interests or a paper abstract</label>
+            <textarea id="q" rows="1" placeholder="Paste your research interests…"></textarea>
+            <div class="boxbar"><button class="go" id="go" type="submit">Match <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button></div>
+          </div>
+          <div class="qrow" id="ex"><span class="lbl">Try</span></div>
+        </form>
+        <div class="pane"><div class="ph"><h2 id="listh">Best-fit labs</h2><span id="scl">score vs. top match</span></div>
+          <div class="pb" id="list"></div></div>
+        <div class="pane prev" id="prev"></div>
+      </div>
+    </section>
+
+    <!-- LANDSCAPE -->
+    <section class="view" id="v-landscape" hidden>
+      <div class="vt"><div><span class="eyebrow">Landscape</span><h1>Every funded lab, <em>by what it studies.</em></h1>
+        <p>Each dot is a lab. Labs working on similar problems sit close together. Your matches glow and are numbered. Click any dot to open it.</p></div></div>
+      <div class="lgrid">
+        <div class="mapwrap"><canvas id="land" role="img" aria-label="Map of funded AI labs laid out by research similarity"></canvas><div class="maptip" id="ltip"></div>
+          <div class="maplegend"><span><i style="background:var(--muted)"></i>Funded lab</span><span><i style="background:var(--accent)"></i>Your match</span><span><i style="background:var(--warm)"></i>You</span></div></div>
+        <div class="pane"><div class="ph"><h2>Your matches</h2><span id="lqn"></span></div><div class="pb"><p class="muted" id="lq"></p><ul class="mlist" id="lml"></ul></div></div>
+      </div>
+    </section>
+
+    <!-- LAB -->
+    <section class="view" id="v-lab" hidden></section>
+
+    <!-- SHORTLIST -->
+    <section class="view" id="v-shortlist" hidden>
+      <div class="vt"><div><span class="eyebrow">Shortlist</span><h1>Compare <em>side by side.</em></h1>
+        <p>Labs you bookmark land here. The best value in each row is highlighted. Track where each conversation stands.</p></div>
+        <button class="btn" id="clearS" type="button" hidden>Clear shortlist</button></div>
+      <div id="sbody" style="flex:1;min-height:0;display:flex;flex-direction:column"></div>
+    </section>
+
+    <!-- HOW -->
+    <section class="view" id="v-how" hidden>
+      <div class="vt"><div><span class="eyebrow">How it works</span><h1>From raw grants <em>to a ranked list.</em></h1>
+        <p>Three public sources, one pipeline. Every number is a real row count.</p></div></div>
+      <div class="hgrid">
+        <div class="flow" id="flow"></div>
+        <div class="h2col">
+          <div class="pane"><div class="ph"><h2>How a lab is scored</h2><span>per query</span></div><div class="pb">
+            <p class="muted">1. BM25 keyword search and SPECTER2 embeddings each pull the closest labs, merged by reciprocal rank fusion into 100 candidates.<br>2. A LightGBM LambdaRank model re-orders them using the retrieval scores plus funding, recency and lab-size features.<br>3. Its score is calibrated on held-out papers, so a higher match means more likely relevant.</p>
+            <p class="muted" id="feat"></p>
+            <p class="muted" style="margin:0">The example searches on Match come from the trained model. Text you type yourself is scored in your browser with a lighter keyword method, because this page can't run the model.</p></div></div>
+          <div class="pane"><div class="ph"><h2>Evaluation</h2><span id="evsub">held-out papers</span></div><div class="pb" id="evbody">
+            <p class="muted">Hide a lab's newest paper, search with its title, and check whether that lab comes back near the top. No hand labels.</p>
+            <div class="evalbox"><div class="metric"><b>—</b><span>Recall@10</span></div><div class="metric"><b>—</b><span>Recall@50</span></div><div class="metric"><b>—</b><span>NDCG@10</span></div><div class="metric"><b>—</b><span>MRR</span></div></div>
+            <p class="muted" style="margin-top:10px">Filled in after the first evaluation run.</p></div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="chat" id="chat">
+  <div class="chatp" id="chatp" role="dialog" aria-label="LabMatch helper" hidden>
+    <div class="chath"><div><b>Ask LabMatch</b><span id="chatsub">Questions about this page, your matches or the data</span></div><button class="iconbtn" id="chatx" type="button" aria-label="Close helper">&times;</button></div>
+    <div class="chatlog" id="chatlog" aria-live="polite"></div>
+    <div class="chatsug" id="chatsug"></div>
+    <form class="chatf" id="chatf"><label for="chatq" class="sr">Your question</label><input id="chatq" autocomplete="off" placeholder="Ask anything…"><button class="go" type="submit" aria-label="Send"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button></form>
+  </div>
+  <button class="chatb" id="chatb" type="button" aria-expanded="false" aria-controls="chatp"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg><span>Ask</span></button>
+</div>
+
+<script type="application/json" id="data">/*DATA*/</script>
+<script type="application/json" id="evaldata">/*EVAL*/</script>
+<script>
+(() => {
+const D = JSON.parse(document.getElementById('data').textContent);
+let EV = null; try { EV = JSON.parse(document.getElementById('evaldata').textContent); } catch {}
+const EX = Object.keys(D.pre);
+D.labs.forEach((L) => (L.n = L.n.replace(/-([a-z])/g, (m, c) => '-' + c.toUpperCase())));
+const BY = new Map(D.labs.map((L) => [L.id, L]));
+const PH = ['Paste your research interests…', 'or the abstract of a paper you loved…', 'or a sentence about what you want to build.'];
+const STOP = new Set('a an the and or of for in on to with from by at as is are be using use via into our we their its this that these those based new study research'.split(' '));
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const money = (n) => (n >= 1e9 ? `$${(n / 1e9).toFixed(1)}B` : n >= 1e6 ? `$${(n / 1e6).toFixed(n >= 1e7 ? 0 : 1)}M` : n >= 1e3 ? `$${Math.round(n / 1e3)}K` : `$${Math.round(n || 0)}`);
+const date = (s) => (s ? new Date(s + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '—');
+const monthsLeft = (s) => (s ? (new Date(s) - new Date()) / 2.63e9 : 0);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const initials = (n) => n.split(' ').filter(Boolean).map((w) => w[0]).filter((c) => /[A-Z]/.test(c)).slice(0, 2).join('');
+const tags = (a) => (a || '').split('/').filter(Boolean).map((x) => `<span class="tag ${esc(x)}">${esc(x)}</span>`).join('');
+/* motion helpers */
+const FMT = { pc: (v) => (v >= 10 ? Math.round(v) : v.toFixed(1)) + '%', int: (v) => Math.round(v).toLocaleString(), money: (v) => money(v), f3: (v) => v.toFixed(3) };
+function countUps(root, base = 0) {
+  $$('[data-n]', root).forEach((el) => {
+    const to = +el.dataset.n, f = FMT[el.dataset.f || 'int'], dl = base + +(el.dataset.d || 0);
+    if (reduce) { el.textContent = f(to); return; }
+    el.textContent = f(0); const t0 = performance.now() + dl, dur = 1100;
+    (function st(now) { const p = Math.max(0, Math.min(1, (now - t0) / dur)); el.textContent = f(to * (1 - Math.pow(1 - p, 4))); if (p < 1) requestAnimationFrame(st); })(performance.now());
+  });
+}
+const terms = (L) => { const nm = new Set(L.n.toLowerCase().split(/[^a-z]+/)); return L.t.filter(([tid]) => !nm.has(D.vocab[tid])); };
+const BM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg>';
+
+/* store */
+const store = { get(k, d) { try { return JSON.parse(localStorage.getItem('lm_' + k)) ?? d; } catch { return d; } }, set(k, v) { try { localStorage.setItem('lm_' + k, JSON.stringify(v)); } catch {} } };
+let saved = store.get('saved', []), status = store.get('status', {});
+let lastRes = null, lastQ = '', sel = 0, lastLab = null;
+const isSaved = (id) => saved.includes(id);
+function toggleSave(id) {
+  saved = isSaved(id) ? saved.filter((x) => x !== id) : [...saved, id];
+  store.set('saved', saved);
+  $$(`[data-save="${id}"]`).forEach((b) => { b.setAttribute('aria-pressed', isSaved(id)); const l = b.querySelector('.sl'); if (l) l.textContent = isSaved(id) ? 'Saved' : 'Save'; });
+  const b = $('#sbadge'); b.textContent = saved.length; b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
+  if (current === 'shortlist') renderShort();
+}
+$('#sbadge').textContent = saved.length;
+
+/* topo background */
+const c = $('#topo'), ctx = c.getContext('2d'); let t = 0; const dpr = Math.min(devicePixelRatio || 1, 2);
+const size = () => { c.width = innerWidth * dpr; c.height = innerHeight * dpr; }; size(); addEventListener('resize', size);
+(function draw() {
+  const w = c.width, h = c.height; ctx.clearRect(0, 0, w, h); ctx.strokeStyle = css('--topo'); ctx.lineWidth = 1.1 * dpr;
+  for (let k = 0; k < 15; k++) { ctx.beginPath(); for (let x = 0; x <= w; x += 10 * dpr) { const u = x / w; const y = h * (0.06 + k * 0.066) + Math.sin(u * 5.2 + k * 0.55 + t) * 22 * dpr + Math.sin(u * 11 - k * 0.3 - t * 1.4) * 9 * dpr + Math.cos(u * 2.1 + k + t * 0.6) * 30 * dpr; x ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke(); }
+  t += 0.0028; if (!reduce) requestAnimationFrame(draw);
+})();
+const t0 = performance.now();
+(function tick(now) { const p = Math.min(1, ((now || t0) - t0) / 1400); $('#labcount').textContent = Math.round(D.stats.funded_labs * (1 - Math.pow(1 - p, 4))).toLocaleString(); if (p < 1) requestAnimationFrame(tick); })();
+let ph = 0; setInterval(() => { ph = (ph + 1) % PH.length; $('#q').placeholder = PH[ph]; }, 2800);
+$('#theme').onclick = () => { const el = document.documentElement; const dark = el.dataset.theme ? el.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; el.dataset.theme = dark ? 'light' : 'dark'; if (current === 'landscape') drawLand(); };
+
+/* ranking (demo index) */
+const vocab = new Map(D.vocab.map((v, i) => [v, i]));
+const toks = (s) => s.toLowerCase().replace(/[^a-z0-9\s-]/g, ' ').split(/\s+/).filter((w) => w && !STOP.has(w));
+function search(q, k = 10) {
+  const w = toks(q), ids = new Set();
+  for (let i = 0; i < w.length; i++) { if (vocab.has(w[i])) ids.add(vocab.get(w[i])); if (i + 1 < w.length && vocab.has(w[i] + ' ' + w[i + 1])) ids.add(vocab.get(w[i] + ' ' + w[i + 1])); }
+  if (!ids.size) return [];
+  const sc = [];
+  for (const L of D.labs) { let s = 0; const hit = []; for (const [tid, wt] of L.t) if (ids.has(tid)) { s += wt; hit.push([wt, D.vocab[tid]]); } if (s > 0) sc.push([s, L, hit]); }
+  if (!sc.length) return [];
+  sc.sort((a, b) => b[0] - a[0]); const top = sc.slice(0, 300), mx = top[0][0];
+  return top.map(([s, L, hit]) => { const sig = { fit: s / mx, funding: Math.min(1, Math.log1p(L.m) / Math.log1p(5e7)), recency: Math.min(L.pr, 30) / 30 }; return { L, sig, score: 0.75 * sig.fit + 0.15 * sig.funding + 0.10 * sig.recency, terms: hit.sort((a, b) => b[0] - a[0]).slice(0, 4).map((h) => h[1]) }; })
+    .sort((a, b) => b.score - a.score).slice(0, k).map((x) => ({ ...x, grant: x.L.g[0]?.[0], ga: x.L.g[0]?.[1] }));
+}
+const fromPre = (q) => D.pre[q].map((r) => ({ L: BY.get(r.id), sig: r.sig, score: r.score, terms: r.terms, grant: r.grant, ga: r.ga })).filter((x) => x.L);
+
+/* match view */
+const C84 = 2 * Math.PI * 35;
+let calib = true; // trained-model results carry calibrated probabilities; typed text uses the keyword scorer
+const pct = (p) => Math.round(p / maxScore() * 100); // shown relative to the top match = 100
+const pf = () => 'int';
+/* turn matched index terms back into the user's own phrases: "graph neural networks", "drug discovery" */
+function phrases(x, q) {
+  const hit = new Set((x.terms || []).flatMap((t) => t.toLowerCase().split(/\s+/)));
+  const words = String(q || '').match(/[A-Za-z0-9][A-Za-z0-9\-']*/g) || [], runs = []; let cur = [];
+  for (const w of words) { const k = w.toLowerCase(); if (hit.has(k) || hit.has(k.replace(/s$/, ''))) cur.push(w); else { if (cur.length) runs.push(cur); cur = []; } }
+  if (cur.length) runs.push(cur);
+  const low = (w) => (/^[A-Z][a-z\-']+$/.test(w) ? w.toLowerCase() : w);
+  let out = runs.map((r) => r.map(low).join(' ')).filter((r) => r.length > 2);
+  if (out.some((r) => r.includes(' '))) out = out.filter((r) => r.includes(' '));
+  out = out.sort((a, b) => b.split(' ').length - a.split(' ').length).slice(0, 3);
+  return out.length ? out : (x.terms || []).slice(0, 2);
+}
+const andList = (a) => (a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]);
+function oddsTip(x) {
+  if (!calib) return 'Keyword score, relative to the best keyword match (100).';
+  const p = x.score, base = 1 / D.stats.funded_labs, lift = p / base, r = (v) => (v >= 100 ? Math.round(v / 10) * 10 : Math.round(v)).toLocaleString();
+  return `Model odds this is the right lab: ${(p * 100).toFixed(p < .1 ? 1 : 0)}%, about ${r(lift)}× a random pick (${(base * 100).toFixed(3)}%). Calibrated on held-out papers.`;
+}
+
+const maxScore = () => Math.max(...(lastRes || []).map((r) => r.score), 0.01);
+function reasons(x) {
+  const L = x.L, out = [];
+  const tm = phrases(x, lastQ);
+  if (tm.length) out.push(`Works on <b>${andList(tm.map(esc))}</b>, like your search.`);
+  if (L.m > 0) out.push(`Has <b>${money(L.m)}</b> in active research grants, funded through <b>${date(L.u)}</b>.`);
+  out.push(L.pr > 0 ? `Published <b>${L.pr}</b> grant-linked papers since 2023.` : `No grant-linked papers listed yet${(L.a || '').includes('NSF') ? ' (NSF papers are not linked in this data)' : ''}.`);
+  return out;
+}
+function rowHTML(x, i) {
+  const L = x.L, d = i * 55;
+  return `<li class="rowc" role="option" tabindex="0" aria-selected="${i === sel}" data-i="${i}" style="animation-delay:${d}ms">
+    <span class="rk">${i + 1}</span>
+    <span style="min-width:0"><span class="nm" style="display:block">${esc(L.n)}</span><span class="in" style="display:block">${esc(L.i)}${L.s ? ` · ${esc(L.s)}` : ''}</span></span>
+    <span class="sc" data-tip="${esc(oddsTip(x))}"><b data-n="${pct(x.score)}" data-f="${pf()}" data-d="${d + 120}">${FMT[pf()](pct(x.score))}</b><span class="sbar"><i style="width:${(x.score / maxScore()) * 100}%;animation-delay:${d + 120}ms"></i></span></span>
+  </li>`;
+}
+function dialAnim(root) { root.querySelectorAll('.val').forEach((el) => setTimeout(() => (el.style.strokeDashoffset = el.dataset.off), 80 + +(el.dataset.delay || 0))); }
+function renderList(res, pool) {
+  $('#listh').textContent = res.length ? `Best-fit labs · ${res.length} of ${pool.toLocaleString()}` : 'No funded labs matched';
+  $('#list').innerHTML = res.length ? `<ol class="rows" role="listbox" aria-label="Ranked labs">${res.map(rowHTML).join('')}</ol>` : '<p class="muted">Try broader words: the method plus the application area.</p>';
+  dialAnim($('#list')); countUps($('#list'));
+  $$('.rowc').forEach((el) => {
+    const pick = () => { sel = +el.dataset.i; $$('.rowc').forEach((r) => r.setAttribute('aria-selected', r === el)); renderPrev(); };
+    el.onclick = pick; el.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); el.nextElementSibling?.focus(); el.nextElementSibling?.click(); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); el.previousElementSibling?.focus(); el.previousElementSibling?.click(); }
+    };
+  });
+  renderPrev();
+}
+function renderPrev() {
+  const p = $('#prev'), x = lastRes?.[sel];
+  if (!x) { p.innerHTML = '<p class="muted" style="margin:auto">Pick a lab to see why it matched.</p>'; return; }
+  const L = x.L, soon = L.u && monthsLeft(L.u) < 12;
+  const word = (v) => (v >= 0.8 ? 'Strong' : v >= 0.5 ? 'Good' : v > 0.15 ? 'Some' : 'Low');
+  const sg = (lbl, v, col, dl) => `<div><span>${lbl}</span><b>${word(v)}</b><span class="bar"><i style="width:${v * 100}%;background:var(${col});animation-delay:${dl}ms"></i></span></div>`;
+  p.innerHTML = `<div class="top3"><div style="min-width:0"><span class="eyebrow">#${sel + 1} match ${tags(L.a)}</span><h3>${esc(L.n)}</h3><div class="where">${esc(L.i)}${L.c ? ` · ${esc(L.c)}, ${esc(L.s)}` : ''}</div>
+      <div class="acts"><a class="btn pri" href="#lab-${L.id}">Open lab page →</a><button class="btn" type="button" data-save="${L.id}" aria-pressed="${isSaved(L.id)}">${BM}<span class="sl">${isSaved(L.id) ? 'Saved' : 'Save'}</span></button></div></div>
+      <div class="dial" data-tip="${esc(oddsTip(x))}" tabindex="0"><svg viewBox="0 0 84 84" aria-hidden="true"><circle class="trk" cx="42" cy="42" r="35" fill="none" stroke-width="7"></circle><circle class="val" cx="42" cy="42" r="35" fill="none" stroke-width="7" stroke-dasharray="${C84}" stroke-dashoffset="${C84}" data-off="${C84 * (1 - x.score / maxScore())}" data-delay="0"></circle></svg><b><span><span data-n="${pct(x.score)}" data-f="${pf()}">${FMT[pf()](pct(x.score))}</span><small>${sel === 0 ? 'top match' : 'vs top'}</small></span></b></div></div>
+    <div class="sec"><h4>Why it matched</h4><ul class="reasons">${reasons(x).map((r, k) => `<li style="animation-delay:${120 + k * 80}ms">${r}</li>`).join('')}</ul></div>
+    ${x.grant ? `<div class="sec"><h4>Closest grant</h4><div class="grant" style="margin:0;-webkit-line-clamp:2"><b>${esc(x.ga)}</b>${esc(x.grant)}</div></div>` : ''}
+    <div class="sigrow">${sg('Research fit', x.sig.fit, '--accent', 100)}${sg('Funding', x.sig.funding, '--ochre', 160)}${sg('Output', x.sig.recency, '--warm', 220)}</div>`;
+  p.classList.remove('swap'); void p.offsetWidth; p.classList.add('swap');
+  dialAnim(p); countUps(p, 60);
+  $('[data-save]', p).onclick = (e) => toggleSave(+e.currentTarget.dataset.save);
+}
+let busy = false;
+function run(text, initial) {
+  const q = (text ?? $('#q').value).trim(); if (!q || busy) return;
+  $('#q').value = q; lastQ = q; sel = 0;
+  $$('#ex button').forEach((b) => b.setAttribute('aria-pressed', b.textContent === q));
+  const pre = D.pre[q];
+  calib = !!pre; $('#scl').textContent = calib ? 'score vs. top match' : 'keyword score';
+  if (initial) { lastRes = fromPre(q); renderList(lastRes, D.stats.funded_labs); return; }
+  busy = true; $('#go').classList.add('busy');
+  $('#list').innerHTML = `<div class="scanp"><p class="muted" style="margin:0">Reading ${(pre ? D.stats.funded_labs : D.labs.length).toLocaleString()} lab profiles…</p>${'<div class="ghost"></div>'.repeat(6)}</div>`;
+  setTimeout(() => { lastRes = pre ? fromPre(q) : search(q); busy = false; $('#go').classList.remove('busy'); renderList(lastRes, pre ? D.stats.funded_labs : D.labs.length); }, reduce ? 0 : 700);
+}
+$('#ex').insertAdjacentHTML('beforeend', EX.map((e) => `<button type="button" aria-pressed="false">${esc(e)}</button>`).join(''));
+$$('#ex button').forEach((b, i) => (b.onclick = () => run(EX[i])));
+$('#form').onsubmit = (e) => { e.preventDefault(); run(); };
+$('#q').onkeydown = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); run(); } };
+
+/* landscape */
+const land = $('#land'), lctx = land.getContext('2d'); let lpts = [], hover = null, landT0 = 0, landRaf, lhov = null;
+const colOf = (a) => (a === 'NIH' ? css('--arc-nih') : a === 'NSF' ? css('--arc-nsf') : css('--campus'));
+function layoutLand() { const r = land.getBoundingClientRect(); land.width = r.width * dpr; land.height = r.height * dpr; const pad = 26 * dpr, W = land.width - 2 * pad, H = land.height - 2 * pad; lpts = D.labs.map((L) => ({ L, x: pad + L.xy[0] * W, y: pad + L.xy[1] * H })); }
+function drawLand(now) {
+  if (current !== 'landscape') return;
+  const el = reduce ? 1e9 : (now || performance.now()) - landT0;
+  const cl = (v) => Math.max(0, Math.min(1, v)), oc = (t) => 1 - Math.pow(1 - t, 3);
+  const back = (t) => { const c = 1.9; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
+  const w = land.width, h = land.height, cx = w / 2, cy = h / 2; lctx.clearRect(0, 0, w, h);
+  const hi = new Map((lastRes || []).map((x, i) => [x.L.id, i]));
+  const base = hi.size ? 0.32 : 0.5, maxR = Math.hypot(cx, cy);
+  lctx.fillStyle = css('--muted');
+  // dots ripple outward from the centre
+  for (const pt of lpts) {
+    if (pt.L.m < 2e5) continue;
+    const k = oc(cl((el - (Math.hypot(pt.x - cx, pt.y - cy) / maxR) * 650) / 520)); if (k <= 0) continue;
+    lctx.globalAlpha = base * k; lctx.beginPath(); lctx.arc(cx + (pt.x - cx) * (0.86 + 0.14 * k), cy + (pt.y - cy) * (0.86 + 0.14 * k), 1.8 * dpr * (0.4 + 0.6 * k), 0, 7); lctx.fill();
+  }
+  lctx.globalAlpha = 1;
+  if (hi.size) {
+    const pulse = (performance.now() / 1600) % 1, acc = css('--accent');
+    const res = lpts.filter((pt) => hi.has(pt.L.id)).sort((a, b) => hi.get(b.L.id) - hi.get(a.L.id));
+    let sx = 0, sy = 0, sw = 0; res.forEach((pt) => { const g = 1 / (1 + hi.get(pt.L.id)); sx += pt.x * g; sy += pt.y * g; sw += g; }); const ux = sx / sw, uy = sy / sw;
+    const T0 = 650, you = cl((el - T0) / 450);
+    if (you <= 0) { if (!reduce) landRaf = requestAnimationFrame(drawLand); return; }
+    // threads draw out from YOU to each lab, best match first
+    lctx.strokeStyle = acc; lctx.lineWidth = dpr;
+    res.forEach((pt) => { const i = hi.get(pt.L.id), t = oc(cl((el - T0 - 150 - i * 70) / 420)); if (t <= 0) return; lctx.globalAlpha = (lhov === pt.L.id ? .55 : .18); lctx.beginPath(); lctx.moveTo(ux, uy); lctx.lineTo(ux + (pt.x - ux) * t, uy + (pt.y - uy) * t); lctx.stroke(); });
+    lctx.globalAlpha = 1;
+    // place numbered pins, pushing overlapping ones apart and drawing a short leader line
+    const pins = res.map((pt) => ({ pt, i: hi.get(pt.L.id), x: pt.x, y: pt.y }));
+    for (let it = 0; it < 40; it++) for (let a = 0; a < pins.length; a++) for (let b = a + 1; b < pins.length; b++) {
+      const A = pins[a], Bp = pins[b], dx = Bp.x - A.x, dy = Bp.y - A.y, dd = Math.hypot(dx, dy) || 1, min = 22 * dpr;
+      if (dd < min) { const k = (min - dd) / 2 / dd; A.x -= dx * k; A.y -= dy * k; Bp.x += dx * k; Bp.y += dy * k; }
+    }
+    pins.forEach(({ pt, i, x, y }) => {
+      const t = cl((el - T0 - 420 - i * 70) / 480); if (t <= 0) return;
+      const sc = back(t) * (lhov === pt.L.id ? 1.3 : 1), drop = (1 - oc(t)) * -14 * dpr;
+      lctx.globalAlpha = Math.min(1, t * 3);
+      lctx.fillStyle = acc; lctx.beginPath(); lctx.arc(pt.x, pt.y, 3 * dpr, 0, 7); lctx.fill();
+      if (Math.hypot(x - pt.x, y - pt.y) > 2) { lctx.strokeStyle = acc; lctx.globalAlpha *= .6; lctx.lineWidth = dpr; lctx.beginPath(); lctx.moveTo(pt.x, pt.y); lctx.lineTo(x, y); lctx.stroke(); lctx.globalAlpha = Math.min(1, t * 3); }
+      if (i === 0 && t >= 1) { lctx.strokeStyle = acc; lctx.globalAlpha = (1 - pulse) * .7; lctx.lineWidth = 2 * dpr; lctx.beginPath(); lctx.arc(x, y, (9 + pulse * 14) * dpr, 0, 7); lctx.stroke(); lctx.globalAlpha = 1; }
+      lctx.save(); lctx.translate(x, y + drop); lctx.scale(sc, sc);
+      lctx.fillStyle = acc; lctx.beginPath(); lctx.arc(0, 0, 9 * dpr, 0, 7); lctx.fill();
+      lctx.fillStyle = css('--accent-ink'); lctx.font = `600 ${10 * dpr}px "DM Mono",monospace`; lctx.textAlign = 'center'; lctx.textBaseline = 'middle'; lctx.fillText(String(i + 1), 0, .5 * dpr);
+      lctx.restore(); lctx.globalAlpha = 1;
+    });
+    const ys = back(you);
+    lctx.fillStyle = css('--warm'); lctx.beginPath(); lctx.arc(ux, uy, 6 * dpr * ys, 0, 7); lctx.fill();
+    if (you >= 1) { lctx.strokeStyle = css('--warm'); lctx.lineWidth = 2 * dpr; lctx.globalAlpha = 1 - pulse; lctx.beginPath(); lctx.arc(ux, uy, (6 + pulse * 22) * dpr, 0, 7); lctx.stroke(); }
+    lctx.globalAlpha = you; lctx.fillStyle = css('--ink'); lctx.font = `600 ${11 * dpr}px "DM Mono",monospace`; lctx.textAlign = 'left'; lctx.fillText('YOU', ux + 10 * dpr, uy - 10 * dpr); lctx.globalAlpha = 1;
+  }
+  if (hover) { lctx.strokeStyle = css('--ink'); lctx.lineWidth = 2 * dpr; lctx.beginPath(); lctx.arc(hover.x, hover.y, 7 * dpr, 0, 7); lctx.stroke(); }
+  if (!reduce) landRaf = requestAnimationFrame(drawLand);
+}
+function nearest(mx, my, rad = 14) { let best = null, bd = (rad * dpr) ** 2; for (const pt of lpts) { if (pt.L.m < 2e5) continue; const d = (pt.x - mx) ** 2 + (pt.y - my) ** 2; if (d < bd) { bd = d; best = pt; } } return best; }
+land.onmousemove = (e) => { const r = land.getBoundingClientRect(); const pt = nearest((e.clientX - r.left) * dpr, (e.clientY - r.top) * dpr); hover = pt; const tip = $('#ltip');
+  if (pt) { tip.innerHTML = `<b>${esc(pt.L.n)}</b>${esc(pt.L.i)}<br>${money(pt.L.m)} active · ${esc(pt.L.a)}`; tip.style.left = pt.x / dpr + 'px'; tip.style.top = pt.y / dpr + 'px'; tip.classList.add('on'); land.style.cursor = 'pointer'; } else { tip.classList.remove('on'); land.style.cursor = 'crosshair'; } if (reduce) drawLand(); };
+land.onmouseleave = () => { hover = null; $('#ltip').classList.remove('on'); };
+land.onclick = (e) => { const r = land.getBoundingClientRect(); const pt = nearest((e.clientX - r.left) * dpr, (e.clientY - r.top) * dpr, 20); if (pt) location.hash = 'lab-' + pt.L.id; };
+function enterLand() {
+  $('#lq').innerHTML = lastRes?.length ? `“${esc(lastQ.length > 110 ? lastQ.slice(0, 110) + '…' : lastQ)}”` : 'Run a match to see where your interests land.';
+  $('#lqn').textContent = lastRes?.length ? `${lastRes.length} labs` : '';
+  $('#lml').innerHTML = (lastRes || []).map((x, i) => `<li><a href="#lab-${x.L.id}"><i>${i + 1}</i><span style="min-width:0"><b style="display:block">${esc(x.L.n)}</b><small style="display:block;color:var(--muted);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(x.L.i)}</small></span></a></li>`).join('');
+  $$('#lml a').forEach((a, i) => { a.style.animationDelay = 1000 + i * 70 + 'ms'; const id = lastRes[i].L.id; a.onmouseenter = () => (lhov = id); a.onmouseleave = () => (lhov = null); });
+  cancelAnimationFrame(landRaf); layoutLand(); landT0 = performance.now(); drawLand();
+}
+addEventListener('resize', () => { if (current === 'landscape') layoutLand(); });
+
+/* lab dashboard */
+function neighbors(L, k = 6) {
+  const mine = new Map(L.t), n2 = Math.hypot(...L.t.map((x) => x[1])), sc = [];
+  for (const o of D.labs) { if (o.id === L.id) continue; let s = 0; for (const [tid, w] of o.t) { const m = mine.get(tid); if (m) s += m * w; } if (s > 0) sc.push([s / (n2 * Math.hypot(...o.t.map((x) => x[1]))), o]); }
+  return sc.sort((a, b) => b[0] - a[0]).slice(0, k);
+}
+function chart(L) {
+  const yrs = []; for (let y = 2016; y <= 2027; y++) yrs.push(y);
+  const m = new Map(L.fy), vals = yrs.map((y) => m.get(y) || 0), mx = Math.max(...vals, 1);
+  const W = 560, H = 200, pl = 46, pb = 22, pt = 12, bw = (W - pl) / yrs.length;
+  const nice = (v) => { const p = Math.pow(10, Math.floor(Math.log10(v))); return Math.ceil(v / p) * p; }; const top = nice(mx), y = (v) => pt + (H - pt - pb) * (1 - v / top);
+  let s = `<svg id="fyc" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Funding by fiscal year">`;
+  [0, .5, 1].forEach((f) => { s += `<line class="grid" x1="${pl}" x2="${W}" y1="${y(top * f)}" y2="${y(top * f)}"/><text x="${pl - 8}" y="${y(top * f) + 4}" text-anchor="end">${money(top * f)}</text>`; });
+  yrs.forEach((yr, i) => { const v = vals[i], x = pl + i * bw + bw * .18, bwid = bw * .64; if (v > 0) s += `<rect class="bar${yr > 2026 ? ' future' : ''}" x="${x}" y="${y(v)}" width="${bwid}" height="${H - pb - y(v)}" rx="3" style="animation-delay:${i * 45}ms"><title>FY${yr}: ${money(v)}</title></rect>`; if (i % 2 === 0) s += `<text x="${x + bwid / 2}" y="${H - 6}" text-anchor="middle">${yr}</text>`; });
+  const nx = pl + (2026 + 10.4 / 12 - 2016) * bw; s += `<line class="now" x1="${nx}" x2="${nx}" y1="${pt}" y2="${H - pb}"/><text class="nowl" x="${nx - 5}" y="${pt + 8}" text-anchor="end">today</text></svg>`;
+  return s;
+}
+function renderLab(id) {
+  const v = $('#v-lab'); const L = BY.get(id ?? lastLab);
+  if (!L) { v.innerHTML = `<div class="vt"><div><span class="eyebrow">Lab</span><h1>No lab open <em>yet.</em></h1><p>Pick a lab from Match, Landscape or your Shortlist and it opens here.</p></div></div><div class="emptybox"><h2>Start from a match</h2><a class="btn pri" href="#match">Go to Match</a></div>`; return; }
+  lastLab = L.id; $('#labsub').textContent = L.n; if ($('#labnav').hidden) { $('#labnav').hidden = false; moveInd(); }
+  const soon = L.u && monthsLeft(L.u) < 12, maxw = Math.max(...L.t.map((x) => x[1])), now = Date.now();
+  const finger = terms(L).slice(0, 16).map(([tid, w], i) => `<span class="${i < 4 ? 'hot' : ''}" style="font-size:${(11.5 + 9 * w / maxw).toFixed(1)}px;animation-delay:${i * 35}ms">${esc(D.vocab[tid])}</span>`).join('');
+  const grants = L.g.map((g, i) => { const st = g[4] ? +new Date(g[4]) : now, en = g[5] ? +new Date(g[5]) : now, pct = Math.max(0, Math.min(1, (now - st) / Math.max(1, en - st))), left = monthsLeft(g[5]);
+    return `<li style="animation-delay:${i * 60}ms"><span class="gt">${esc(g[0])}</span><span class="gm"><span>${esc(g[1])} ${esc(g[2])}</span><span>${money(g[3])}</span><span>${date(g[4])} → ${date(g[5])}</span>${left > 0 ? `<span style="color:var(${left < 12 ? '--warm' : '--accent'})">${Math.round(left)} mo left</span>` : '<span>ended</span>'}</span><span class="prog${left > 0 && left < 12 ? ' soon' : ''}"><i style="width:${(pct * 100).toFixed(0)}%;animation-delay:${200 + i * 60}ms"></i></span></li>`; }).join('');
+  const papers = L.p.map((p, i) => `<li style="animation-delay:${i * 50}ms">${esc(p[0])}<small>${p[1] || ''} · ${esc(p[2] || '')}</small></li>`).join('');
+  const near = neighbors(L).map(([s, o]) => `<li><a href="#lab-${o.id}"><b>${esc(o.n)}</b><span>${esc(o.i)}</span><em>${Math.round(s * 100)}%</em></a></li>`).join('');
+  v.innerHTML = `<div class="vt"><div class="lt"><a class="backb" href="#match" aria-label="Back to matches">←</a><div><span class="eyebrow">${esc(L.a)} funded · since ${L.since || '—'}</span><h1>${esc(L.n)}</h1><p style="margin:2px 0 0">${esc(L.i)}${L.c ? ` · ${esc(L.c)}, ${esc(L.s)}` : ''}</p></div></div>
+      <button class="btn pri" type="button" data-save="${L.id}" aria-pressed="${isSaved(L.id)}">${BM}<span class="sl">${isSaved(L.id) ? 'Saved' : 'Save'}</span></button></div>
+    <div class="labgrid">
+      <div class="stats">
+        <div class="stat"><b data-n="${L.m}" data-f="money">${money(L.m)}</b><span>active funding</span></div>
+        <div class="stat" style="animation-delay:.05s"><b style="color:var(${soon ? '--warm' : '--ink'})">${date(L.u)}</b><span>funded through</span></div>
+        <div class="stat" style="animation-delay:.1s"><b>${L.nact}<small style="font-size:13px;color:var(--muted)"> / ${L.na}</small></b><span>active / all grants</span></div>
+        <div class="stat" style="animation-delay:.15s"><b data-n="${L.pr}" data-d="150">${L.pr}</b><span>papers since 2023</span></div>
+        <div class="stat" style="animation-delay:.2s"><b data-n="${L.np}" data-d="200">${L.np}</b><span>grant-linked papers</span></div>
+      </div>
+      <div class="pane" style="grid-row:2"><div class="ph"><h2>Funding by fiscal year</h2><span>NIH + NSF</span></div><div class="pb" style="overflow:hidden">${chart(L)}</div></div>
+      <div class="pane" style="grid-row:2;animation-delay:.06s"><div class="ph"><h2>Research fingerprint</h2><span>top terms</span></div><div class="pb"><div class="finger">${finger}</div></div></div>
+      <div class="pane" style="grid-row:2 / span 2;animation-delay:.12s"><div class="ph"><h2>People &amp; similar labs</h2><span>by research text</span></div><div class="pb">${L.co.length ? `<h4 style="margin:0 0 6px;font:600 10.5px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)">Co-investigators</h4><div class="people">${[...new Set(L.co)].map((n) => `<span class="person"><i>${esc(initials(n))}</i>${esc(n)}</span>`).join('')}</div>` : ''}<h4 style="margin:0 0 4px;font:600 10.5px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)">Closest research</h4><ul class="near">${near}</ul></div></div>
+      <div class="pane" style="grid-row:3;animation-delay:.08s"><div class="ph"><h2>Grants</h2><span>${L.g.length} most recent</span></div><div class="pb"><ul class="glist">${grants || '<p class="muted">No grants listed</p>'}</ul></div></div>
+      <div class="pane" style="grid-row:3;animation-delay:.1s"><div class="ph"><h2>Recent papers</h2><span>grant-linked</span></div><div class="pb">${papers ? `<ul class="plist">${papers}</ul>` : '<p class="muted">No grant-linked papers yet</p>'}</div></div>
+    </div>`;
+  $('[data-save]', v).onclick = (e) => toggleSave(+e.currentTarget.dataset.save);
+}
+
+/* shortlist */
+const STATUSES = ['To contact', 'Emailed', 'Replied', 'Meeting'];
+function renderShort() {
+  const b = $('#sbody'), labs = saved.map((id) => BY.get(id)).filter(Boolean); $('#clearS').hidden = !labs.length;
+  if (!labs.length) { b.innerHTML = `<div class="emptybox"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg><h2>Nothing saved yet</h2><p>Press Save on any match or lab page. Saved labs line up here side by side.</p><a class="btn pri" href="#match">Find labs</a></div>`; return; }
+  const best = (f) => { const m = Math.max(...labs.map(f)); return (v) => (v === m && labs.length > 1 ? ' class="best"' : ''); };
+  const bm = best((L) => L.m), bu = best((L) => +new Date(L.u || 0)), bp = best((L) => L.pr), bn = best((L) => L.nact);
+  const row = (h, f) => `<tr><th scope="row">${h}</th>${labs.map(f).join('')}</tr>`;
+  b.innerHTML = `<div class="cmpwrap"><table class="cmp"><thead><tr><th></th>${labs.map((L) => `<th><button class="x" type="button" data-id="${L.id}" aria-label="Remove ${esc(L.n)}">&times;</button><a href="#lab-${L.id}">${esc(L.n)}</a><small>${esc(L.i)}</small></th>`).join('')}</tr></thead><tbody>
+    ${row('Status', (L) => `<td><div class="status">${STATUSES.map((s) => `<button type="button" data-id="${L.id}" data-s="${s}" aria-pressed="${(status[L.id] || 'To contact') === s}">${s}</button>`).join('')}</div></td>`)}
+    ${row('Active funding', (L) => `<td${bm(L.m)}>${money(L.m)}</td>`)}${row('Funded through', (L) => `<td${bu(+new Date(L.u || 0))}>${date(L.u)}</td>`)}
+    ${row('Active grants', (L) => `<td${bn(L.nact)}>${L.nact}</td>`)}${row('Papers since 2023', (L) => `<td${bp(L.pr)}>${L.pr}</td>`)}
+    ${row('Agencies', (L) => `<td>${tags(L.a)}</td>`)}${row('Works on', (L) => `<td>${terms(L).slice(0, 5).map(([tid]) => esc(D.vocab[tid])).join(', ')}</td>`)}
+    ${row('Latest grant', (L) => `<td>${esc(L.g[0]?.[0] || '—')}</td>`)}</tbody></table></div>`;
+  $$('.x', b).forEach((x) => (x.onclick = () => toggleSave(+x.dataset.id)));
+  $$('.status button', b).forEach((x) => (x.onclick = () => { status[x.dataset.id] = x.dataset.s; store.set('status', status); renderShort(); }));
+}
+$('#clearS').onclick = () => { saved = []; store.set('saved', saved); $('#sbadge').textContent = 0; renderShort(); };
+
+/* how it works */
+const S = D.stats, n = (v) => v.toLocaleString();
+const STAGES = [
+  ['Sources', 'NIH RePORTER, NSF Awards, OpenAlex.', `${n(S.raw_awards)}<small>grants</small>`, ['NIH', 'NSF', 'OpenAlex'], 'run'],
+  ['Orchestrate', 'One weekly Airflow DAG runs every step in order.', '9<small>tasks</small>', ['Airflow'], 'run'],
+  ['Process', 'PySpark cleans raw files into versioned Iceberg tables.', `${n(S.raw_pub_links)}<small>grant→paper links</small>`, ['PySpark', 'Iceberg'], 'run'],
+  ['Resolve', 'NIH and NSF PIs merged into one person per lab; OpenAlex author matching via shared papers.', `${n(S.raw_investigators)}<small>PIs</small>`, ['Entity resolution'], 'run'],
+  ['Model', 'dbt builds one tested profile per lab.', `${n(S.labs)}<small>AI/ML labs</small>`, ['dbt', 'DuckDB'], 'run'],
+  ['Retrieve', 'SPECTER2 embeddings + BM25, fused.', `${n(S.grants_ml)}<small>grants indexed</small>`, ['SPECTER2', 'BM25'], EV ? 'run' : 'wip'],
+  ['Rank', 'LightGBM LambdaRank on fit, funding, recency.', `${EV ? Object.keys(EV.feature_gain).length : 18}<small>features</small>`, ['LightGBM', 'MLflow'], EV ? 'run' : 'wip'],
+  ['Serve', 'FastAPI + this web app.', `${n(S.funded_labs)}<small>funded labs</small>`, ['FastAPI', 'Next.js'], 'run'],
+];
+$('#flow').innerHTML = STAGES.map(([h, p, num, ch, st], i) => `<div class="stage" style="animation-delay:${i * 60}ms"><div class="sth"><h3>${h}</h3></div><div class="num">${num}</div><p>${p}</p><div class="chips2">${ch.map((c) => `<span>${c}</span>`).join('')}</div><i class="dot"></i></div>`).join('');
+if (EV) {
+  $('#feat').innerHTML = 'Strongest ranker features: ' + Object.keys(EV.feature_gain).slice(0, 5).map((f) => `<code style="font:500 11.5px var(--mono);background:var(--sunk);padding:1px 6px;border-radius:5px">${esc(f)}</code>`).join(' ');
+  const M = EV.metrics, sys = [['bm25', 'BM25'], ['dense', 'SPECTER2'], ['hybrid', 'Hybrid (RRF)'], ['lambdarank', 'LambdaRank']];
+  const bestN = Math.max(...sys.map(([k]) => M[k]['ndcg@10']));
+  $('#evsub').textContent = `${EV.protocol.queries_test.toLocaleString()} test queries`;
+  $('#evbody').innerHTML = `<p class="muted">Hide a lab's newest paper, search with its title, check whether that lab ranks near the top. Test labs are never seen in training.</p>
+    <p class="muted caveat">One caveat: paper titles are short and keyword-heavy, which suits keyword search. Real visitors type longer descriptions, so read these as ranking scores, not a promise for every search.</p>
+    <div class="evalbox" style="margin-bottom:10px"><div class="metric"><b data-n="${M.lambdarank['recall@10']}" data-f="f3">${M.lambdarank['recall@10'].toFixed(3)}</b><span>Recall@10</span></div><div class="metric"><b data-n="${M.lambdarank['recall@50']}" data-f="f3" data-d="80">${M.lambdarank['recall@50'].toFixed(3)}</b><span>Recall@50</span></div><div class="metric"><b data-n="${M.lambdarank['ndcg@10']}" data-f="f3" data-d="160">${M.lambdarank['ndcg@10'].toFixed(3)}</b><span>NDCG@10</span></div><div class="metric"><b data-n="${M.lambdarank.mrr}" data-f="f3" data-d="240">${M.lambdarank.mrr.toFixed(3)}</b><span>MRR</span></div></div>
+    <table class="etable"><thead><tr><th>System</th><th>R@10</th><th>R@50</th><th>NDCG@10</th><th>MRR</th></tr></thead><tbody>${sys.map(([k, l]) => `<tr class="${M[k]['ndcg@10'] === bestN ? 'win' : ''}"><td>${l}</td><td>${M[k]['recall@10'].toFixed(3)}</td><td>${M[k]['recall@50'].toFixed(3)}</td><td>${M[k]['ndcg@10'].toFixed(3)}</td><td>${M[k].mrr.toFixed(3)}</td></tr>`).join('')}</tbody></table>`;
+}
+
+
+/* overview */
+function renderOverview() {
+  const S0 = D.stats;
+  const st = [[S0.funded_labs, 'int', 'funded AI/ML labs'], [S0.active_dollars, 'money', 'in active AI/ML grants'], [S0.raw_awards, 'int', 'grants read']];
+  if (EV) st.push([EV.metrics.lambdarank['recall@10'] * 100, 'pc', `right lab in the top 10 (keyword search: ${Math.round(EV.metrics.bm25['recall@10'] * 100)}%)`]);
+  $('#ovstats').innerHTML = st.map(([v, f, l], i) => `<div><b data-n="${v}" data-f="${f}" data-d="${300 + i * 90}">${FMT[f](v)}</b><span>${l}</span></div>`).join('');
+  countUps($('#ovstats'));
+  const q = EX[0], res = fromPre(q).slice(0, 3), top = res[0]?.score || 1, el = $('#ovtype'); el.textContent = '';
+  $('#ovres').innerHTML = ''; let i = 0;
+  const show = () => {
+    $('#ovres').innerHTML = res.map((x, k) => `<li style="animation-delay:${k * 110}ms"><span class="rk">${k + 1}</span><span style="min-width:0"><b>${esc(x.L.n)}</b><small>${esc(x.L.i)}</small><em>${phrases(x, q)[0] ? 'Works on ' + esc(phrases(x, q).slice(0, 2).join(' and ')) : ''}</em></span><span class="sc"><b>${Math.round(x.score / top * 100)}</b><span class="sbar"><i style="width:${x.score / top * 100}%;animation-delay:${200 + k * 110}ms"></i></span></span></li>`).join('');
+  };
+  if (reduce) { el.textContent = q; show(); return; }
+  (function type() { el.textContent = q.slice(0, ++i); if (i < q.length) setTimeout(type, 22 + Math.random() * 30); else setTimeout(show, 250); })();
+}
+$('#ovmore').onclick = $('#ovq').onclick = (e) => { e.preventDefault(); location.hash = 'match'; run(EX[0]); };
+
+/* helper chat */
+let sampleFn = null;
+try { window.claude?.use?.('sample').then((s) => (sampleFn = s)).catch(() => {}); } catch {}
+const chatLog = [], SUG = {
+  overview: ['What is LabMatch?', 'Who is it for?', 'Where does the data come from?'],
+  match: ['What does the score mean?', 'Why is the #1 lab first?', 'How should I phrase my search?'],
+  landscape: ['How do I read this map?', 'What does YOU mean?', 'Why are labs clustered?'],
+  lab: ['Is this lab still funded?', 'How do I contact this lab?', 'What does this lab work on?'],
+  shortlist: ['How do I save a lab?', 'What do the statuses do?', 'Is my shortlist private?'],
+  how: ['What is LambdaRank?', 'What do Recall@10 and NDCG mean?', 'How was it tested?'],
+};
+const FAQ = [
+  [/what is|about|purpose|do\b|who.*for|for whom/, `LabMatch helps students and researchers find a research lab. Describe what you want to work on, and it ranks ${D.stats.funded_labs.toLocaleString()} US AI/ML labs that have active NIH or NSF grants, with the reasons each one fits.`],
+  [/score|100|percent|%|likel|odds/, 'The best match for your search is shown as 100, and the others are scored relative to it. Hover the score ring to see the model\'s calibrated odds that a lab is the right one, compared with picking at random.'],
+  [/#1|first|top|why/, 'Labs are ranked by a trained model (LightGBM LambdaRank). It weighs how closely a lab\'s grants and papers match your words, both by keywords (BM25) and by meaning (SPECTER2), plus funding and recent output. The reasons under each lab say what matched.'],
+  [/phrase|search|type|write|query/, 'Write a sentence about the method and the application, like "graph neural networks for drug discovery". Pasting a paper abstract works too. The example buttons use the full trained model.'],
+  [/map|landscape|cluster|dot|you/, 'Every dot is a funded lab. Labs that work on similar topics sit close together. Your matches are numbered pins, and YOU marks the center of your top matches. Click any dot to open that lab.'],
+  [/fund|grant|money|active|expire/, 'Funding comes from NIH RePORTER and NSF Awards. "Active" means a research grant that has not ended yet; conference, travel and I-Corps awards are left out.'],
+  [/contact|email|reach/, 'Open the lab page to see the PI, institution, grants and recent papers. Use the institution site to find the PI\'s email, then mark the lab "Emailed" in your Shortlist.'],
+  [/save|shortlist|status|private/, 'Press Save on any lab. Saved labs line up side by side in Shortlist, where you can track status (To contact, Emailed, Replied, Meeting). Your shortlist stays in this browser only.'],
+  [/data|source|where/, 'Grants come from NIH RePORTER and NSF Awards, and papers from OpenAlex and NIH grant-paper links. A pipeline (Airflow, PySpark, Apache Iceberg, dbt) cleans them and builds one profile per lab.'],
+  [/lambdarank|ndcg|recall|mrr|test|eval|accura|model/, EV ? `It was tested by hiding each lab's newest paper and searching with its title. On ${EV.protocol.queries_test.toLocaleString()} test searches, the right lab was in the top 10 ${(EV.metrics.lambdarank['recall@10'] * 100).toFixed(0)}% of the time (keyword search alone: ${(EV.metrics.bm25['recall@10'] * 100).toFixed(0)}%). NDCG@10 rewards putting it near the very top.` : 'The model is tested on held-out papers.'],
+  [/who.*(built|made)|author|manasa/, 'LabMatch was built by Manasa Vijayaraghavan.'],
+];
+function faq(q) { const t = q.toLowerCase(); for (const [re, a] of FAQ) if (re.test(t)) return a; return 'I can explain the scores, the map, the data and how to use each screen. Try one of the suggestions below.'; }
+function chatCtx() {
+  const top = (lastRes || []).slice(0, 5).map((x, i) => `${i + 1}. ${x.L.n} (${x.L.i}), relative score ${Math.round(x.score / maxScore() * 100)}, active funding ${money(x.L.m)} until ${date(x.L.u)}, matched on: ${phrases(x, lastQ).join(', ')}`).join('\n');
+  const L = current === 'lab' && lastLab ? BY.get(lastLab) : null;
+  return `You are the built-in helper inside LabMatch, a web app. Answer in 1-3 short, friendly sentences of plain language for someone who may not know machine learning. Only state facts given here or returned by tools; if unsure, say so.
+About LabMatch: helps students and researchers find a US AI/ML research lab. User describes their research; app ranks ${D.stats.funded_labs.toLocaleString()} labs with active NIH/NSF research grants. Data: NIH RePORTER, NSF Awards (${D.stats.raw_awards.toLocaleString()} grants), OpenAlex papers. Pipeline: Airflow, PySpark, Apache Iceberg, dbt. Ranking: BM25 keyword search + SPECTER2 embeddings fused (RRF), re-ranked by LightGBM LambdaRank with funding and recency features, Platt-calibrated. Scores shown relative to the top match (=100); calibrated odds in the tooltip. Built by Manasa Vijayaraghavan.
+${EV ? `Evaluation: hide each lab's newest paper, search with its title; ${EV.protocol.queries_test} test queries on unseen labs. LambdaRank Recall@10 ${EV.metrics.lambdarank['recall@10']}, NDCG@10 ${EV.metrics.lambdarank['ndcg@10']}; BM25 alone Recall@10 ${EV.metrics.bm25['recall@10']}. Caveat: title queries favor keyword search.` : ''}
+Screens: Overview, Match (search + ranked list + reasons), Landscape (map of labs by topic, YOU marker), Lab (one lab: funding, grants, papers, similar labs), Shortlist (saved labs side by side with contact status, stored only in this browser), How it works.
+The user is on the "${current}" screen.${lastQ ? `\nCurrent search: "${lastQ}". Top matches:\n${top}` : ''}${L ? `\nOpen lab: ${L.n}, ${L.i}; active funding ${money(L.m)} until ${date(L.u)}; ${L.pr} papers since 2023; topics: ${terms(L).slice(0, 8).map(([t]) => D.vocab[t]).join(', ')}.` : ''}
+You can call search_labs to look up labs for a topic.`;
+}
+function bubble(role, html) { const d = document.createElement('div'); d.className = 'msg ' + role; d.innerHTML = html; $('#chatlog').appendChild(d); $('#chatlog').scrollTop = 1e9; return d; }
+function chatSug() { $('#chatsug').innerHTML = (SUG[current] || SUG.overview).map((q) => `<button type="button">${esc(q)}</button>`).join(''); $$('#chatsug button').forEach((b) => (b.onclick = () => ask(b.textContent))); }
+let chatBusy = false;
+async function ask(q) {
+  q = q.trim(); if (!q || chatBusy) return; $('#chatq').value = '';
+  bubble('me', esc(q)); chatLog.push({ role: 'user', content: q });
+  const out = bubble('bot typing', '<i></i><i></i><i></i>');
+  if (!sampleFn) { setTimeout(() => { out.className = 'msg bot'; out.textContent = faq(q); chatLog.push({ role: 'assistant', content: out.textContent }); }, reduce ? 0 : 450); return; }
+  chatBusy = true;
+  const msgs = chatLog.slice(-8).map((m) => ({ ...m })); msgs[0] = { role: 'user', content: chatCtx() + '\n\nQuestion: ' + msgs[0].content };
+  if (msgs[0].role !== 'user') msgs.shift();
+  try {
+    const r = await sampleFn(msgs, { modelTier: 'quick', cache: false,
+      onText: ({ text }) => { if (text) { out.className = 'msg bot'; out.textContent = text; $('#chatlog').scrollTop = 1e9; } },
+      tools: [{ name: 'search_labs', description: 'Find the best-matching funded labs for a research topic. Returns up to 5 labs.', inputSchema: { type: 'object', properties: { topic: { type: 'string' } }, required: ['topic'] },
+        execute: ({ topic }) => (D.pre[topic] ? fromPre(topic) : search(String(topic || ''))).slice(0, 5).map((x) => ({ name: x.L.n, institution: x.L.i, state: x.L.s, active_funding: money(x.L.m), funded_until: date(x.L.u) })) }] });
+    out.className = 'msg bot'; out.textContent = r.text || faq(q);
+  } catch (e) { out.className = 'msg bot'; out.textContent = faq(q); if (e?.code === 'not_granted') sampleFn = null; }
+  chatLog.push({ role: 'assistant', content: out.textContent }); chatBusy = false;
+}
+function openChat(on) { $('#chatp').hidden = !on; $('#chatb').setAttribute('aria-expanded', on); $('#chat').classList.toggle('open', on); if (on) { chatSug(); if (!chatLog.length) bubble('bot', 'Hi! I can explain anything on this screen, what the scores mean, or help you phrase a search.'); setTimeout(() => $('#chatq').focus(), 50); } }
+$('#chatb').onclick = () => openChat($('#chatp').hidden); $('#chatx').onclick = () => openChat(false);
+$('#chatf').onsubmit = (e) => { e.preventDefault(); ask($('#chatq').value); };
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('#chatp').hidden) openChat(false); });
+
+/* router */
+const ORDER = ['overview', 'match', 'landscape', 'lab', 'shortlist', 'how'];
+let current = null;
+function moveInd() { const b = $(`.nav button[data-tab="${current}"]`), ind = $('#navind'); if (!b) return; ind.style.height = b.offsetHeight + 'px'; ind.style.transform = `translateY(${b.offsetTop}px)`; }
+function route() {
+  const h = location.hash.slice(1) || 'overview'; let view = h, labId = null;
+  if (h.startsWith('lab-')) { view = 'lab'; labId = +h.slice(4); }
+  if (!ORDER.includes(view)) view = 'overview';
+  const prev = current; current = view;
+  $$('.view').forEach((v) => (v.hidden = v.id !== 'v-' + view));
+  const el = $('#v-' + view);
+  if (prev && prev !== view) { el.classList.remove('enter-r', 'enter-l'); void el.offsetWidth; el.classList.add(ORDER.indexOf(view) >= ORDER.indexOf(prev) ? 'enter-r' : 'enter-l'); }
+  $$('.nav button').forEach((b) => (b.dataset.tab === view ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current')));
+  moveInd();
+  if (view === 'lab') { renderLab(labId); countUps($('#v-lab'), 100); }
+  if (view === 'shortlist') renderShort();
+  if (view === 'landscape') enterLand();
+  if (view === 'match' && prev) { dialAnim($('#v-match')); countUps($('#v-match')); }
+  if (view === 'how') countUps($('#v-how'), 200);
+  if (view === 'overview' && prev) renderOverview();
+  if (!$('#chatp').hidden) chatSug();
+  $('#v-' + view).scrollTop = 0;
+}
+document.addEventListener('pointerdown', (e) => {
+  const b = e.target.closest('.btn, .go, .qrow button, .nav button'); if (!b || reduce) return;
+  const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2.2, s = document.createElement('span');
+  s.className = 'rip'; s.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
+  b.appendChild(s); setTimeout(() => s.remove(), 650);
+});
+document.addEventListener('pointermove', (e) => {
+  const p = e.target.closest?.('.pane, .stage, .stat, .mapwrap'); if (!p) return;
+  const r = p.getBoundingClientRect(); p.style.setProperty('--mx', e.clientX - r.left + 'px'); p.style.setProperty('--my', e.clientY - r.top + 'px');
+}, { passive: true });
+$$('.nav button').forEach((b) => (b.onclick = () => (location.hash = b.dataset.tab === 'lab' && lastLab ? 'lab-' + lastLab : b.dataset.tab)));
+addEventListener('hashchange', route); addEventListener('resize', moveInd);
+run(EX[0], true); route(); renderOverview(); document.fonts?.ready.then(moveInd);
+})();
+</script>

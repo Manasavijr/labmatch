@@ -1,0 +1,22 @@
+version: 2
+sources:
+  - name: bronze
+    description: Iceberg tables written by pipeline/spark/bronze_grants.py
+    meta: {plugin: iceberg}
+    tables:
+      - name: award
+        columns:
+          - name: award_id
+            tests: [unique, not_null]
+      - name: award_funding
+      - name: award_investigator
+      - name: award_publication
+      - name: institution
+        columns:
+          - name: inst_id
+            tests: [unique, not_null]
+      - name: investigator
+        columns:
+          - name: inv_id
+            tests: [unique, not_null]
+      - name: publication

@@ -1,0 +1,13 @@
+.venv/
+data/
+web/node_modules/
+web/.next/
+__pycache__/
+mlruns/
+dbt/logs/
+dbt/target/
+dbt/.user.yml
+artifact/labmatch.html
+.env
+_sync/
+.sync/

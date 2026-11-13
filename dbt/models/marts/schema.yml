@@ -1,0 +1,15 @@
+version: 2
+models:
+  - name: lab_profile
+    description: One row per AI/ML lab (PI at a US institution) with funding and output features.
+    columns:
+      - name: inv_id
+        tests: [unique, not_null]
+      - name: n_awards
+        tests: [not_null]
+  - name: lab_document
+    columns:
+      - name: inv_id
+        tests: [not_null]
+      - name: text
+        tests: [not_null]

@@ -1,0 +1,14 @@
+labmatch:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('LABMATCH_ROOT', '..') }}/data/lake/labmatch.duckdb"
+      threads: 4
+      plugins:
+        - module: iceberg
+          config:
+            catalog: lake
+            type: sql
+            uri: "sqlite:///{{ env_var('LABMATCH_ROOT', '..') }}/data/lake/catalog.db"
+            warehouse: "file://{{ env_var('LABMATCH_ROOT', '..') }}/data/lake/warehouse"
